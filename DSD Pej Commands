@@ -1,0 +1,110 @@
+kubectl create -f https://download.elastic.co/downloads/eck/2.3.0/crds.yaml
+
+
+kubectl apply -f https://download.elastic.co/downloads/eck/2.3.0/operator.yaml
+
+
+
+
+elasticsearch yaml file  ///D:\ConcordiaU\FALL 22\COMP 6231 -DD (Distributed System Design)\Project
+
+
+
+
+
+kubectl apply -f elasticsearch.yaml
+
+kubectl get pods
+
+kubectl get svc
+
+kubectl get pvc
+
+################################################
+# secret object for elastic user
+kubectl get secret dsd-prj-es-es-elastic-user
+
+
+PASSWORD=$(kubectl get secret dsd-prj-es-es-elastic-user -o=jsonpath='{.data.elastic}' | base64 --decode)
+
+echo $PASSWORD // 9y5n2p6lDHIoXr36I821hh1k
+###############################################
+
+# port forward cluster ip service
+kubectl port-forward service/dsd-prj-es-es-http 9200
+
+# elastic password
+PASSWORD=$(kubectl get secret dsd-prj-es-es-elastic-user -o=jsonpath='{.data.elastic}' | base64 --decode)
+9y5n2p6lDHIoXr36I821hh1k
+
+
+# access elasticsearch api via curl with basic auth
+curl -u "elastic:$PASSWORD" -k "https://localhost:9200"
+
+
+dsd-prj-es-es-client-0
+9y5n2p6lDHIoXr36I821hh1k
+
+
+#########################################################
+##################### Kibana ############################
+#########################################################
+
+kubectl apply -f kibana.yaml
+
+
+kubectl get pods //Available Pods
+
+kubectl get svc //Available services
+
+# port forward kibana cluster ip service
+kubectl port-forward service/dsd-prj-es-kb-http 5601
+
+PASSWORD=$(kubectl get secret dsd-prj-es-es-elastic-user -o=jsonpath='{.data.elastic}' | base64 --decode)
+
+
+https://localhost:5601/app/kibana#/home
+echo $PASSWORD //9y5n2p6lDHIoXr36I821hh1k
+
+username: elastic
+
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
+
+https://gist.github.com/erangaeb/fc554782a09ad309b0a557a4e13ae949#file-elasticsearch-yaml
+
+
+
+kubectl create -f https://download.elastic.co/downloads/eck/2.5.0/crds.yaml
+
+kubectl get crd
+kubectl get all -n elastic-system
+
+
+-> kubectl apply -f elasticsearch.yaml /// Deploy elastic search using elasticsearch.yaml file 1 master 1 data 4 clients
+
+
+kubectl get pods // to check the running elasticsearch containers
+kubectl get svc // 
+kubectl get pvc //
+kubectl get pv //
+
+
+
+kubectl get secret supraelasticsearch1-es-elastic-user //secret object for elastic user
+PASSWORD=$(kubectl get secret supraelasticsearch1-es-elastic-user -o=jsonpath='{.data.elastic}' | base64 --decode) //get password
+
+echo $PASSWORD // Prints password
+// Password - 490Kr716cORjRGApqq4PO263
+
+
+kubectl port-forward service/supraelasticsearch1-es-http 9200 //port forward cluster ip service
